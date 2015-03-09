@@ -22,7 +22,9 @@ db.on("open", function(){
 
 	var tempSchema = new mongoose.Schema({
 		temperatura: Number,
-		umidade: Number
+		umidade: Number,
+		hora: String,
+		data: String,
 	});
 
 	Temp = mongoose.model('Temp', tempSchema);
@@ -40,14 +42,33 @@ serial.on("open", function(){
 
 	var timer = setInterval(function(){
 		var data = JSON.parse(dados);
-		var tempDados = new Temp(data);
+		var tempDados = new Temp({
+			hora: moment().format("HH:mm"),
+			data: moment().format("DD/MM/YYYY"),
+			temperatura: data.temperatura,
+			umidade: data.umidade			
+		});
 		tempDados.save(function(erro){
 			if(erro) console.log(erro);
 		});
-	},60000);
+	},600000);
 
 	serial.on("data", function(data){
 		dados = data;
+		io.emit('dadosClima', dados);
 	});
 });
 
+app.get('/temps', function(req, res){
+	Temp.find({}, function(erro, resultado){
+		res.json(resultado);
+	});
+});
+
+app.get('/', function(req, res){
+	res.render('index2');
+});
+
+http.listen(4000, function(){
+	console.log("HTTP iniciado na porta 4000");
+})
