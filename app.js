@@ -66,7 +66,7 @@ app.get('/temps', function(req, res){
 });
 
 app.get('/', function(req, res){
-	res.render('index2');
+	res.render('index');
 });
 
 http.listen(4000, function(){
