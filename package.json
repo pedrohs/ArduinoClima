@@ -6,6 +6,7 @@
     "cron": "^1.0.9",
     "ejs": "^2.3.1",
     "express": "^4.12.2",
+    "express-load": "^1.1.14",
     "moment": "^2.9.0",
     "mongoose": "^3.8.24",
     "serialport": "^1.6.1",
