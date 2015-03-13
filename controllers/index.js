@@ -1,6 +1,6 @@
 module.exports = function(app){
 	var Temp = app.models.temperatura;
-
+	
 	var indexController = {
 		index: function(req, res){
 			res.render('index');
